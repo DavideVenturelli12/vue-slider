@@ -45,18 +45,41 @@ const app = new Vue({
     el: '#app',
     data: {
         slides,
-        indiceSlideAttiva: 0
+        indiceSlideAttiva: 0,
+        intervalId: undefined
     },
     methods: {
         immaginePrecedente() {
             if (this.indiceSlideAttiva > 0) {
                 this.indiceSlideAttiva--;
+            } else {
+                this.indiceSlideAttiva = this.slides.length - 1;
             }
         },
         immagineSuccessiva() {
             if (this.indiceSlideAttiva < this.slides.length - 1) {
                 this.indiceSlideAttiva++;
+            } else {
+                this.indiceSlideAttiva = 0;
             }
-        }
+        },
+        //BONUS 1: 
+        //al click su una thumb, visualizzare in grande l'immagine corrispondente
+
+        selectSlide(index) {
+            //console.log(index);
+            this.indiceSlideAttiva = index;
+
+        },
+        //BONUS 2 e 3:
+        //applicare l'autoplay allo slider: ogni 3 secondi, cambia immagine automaticamente
+
+        startTimer() {
+            const intervalId = setInterval(this.immagineSuccessiva, 3000);
+        },
+        stopTimer() {
+            clearInterval(this.intervalId);
+        },
     }
+
 });
